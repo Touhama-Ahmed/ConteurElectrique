@@ -511,6 +511,11 @@
 @endsection
 
 @section('JsFooter')
+    <!-- Page level plugins -->
+    <script type="text/javascript" src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+    <!-- Page level custom scripts -->
+    <script type="text/javascript" src="js/demo/datatables-demo.js"></script>
     <!-- END PAGE LEVEL JS-->
 @endsection
