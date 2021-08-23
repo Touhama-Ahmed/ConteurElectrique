@@ -1,35 +1,37 @@
 <?php
 
+Route::get('/dashboard', 'AdminController@I_dashboard');
+Route::get('/clients', 'AdminController@I_clients');
 
 Route::group( ['middleware' => 'isAuth'], function ()
 {
-	
+
 Route::group( ['middleware' => 'isAdmin'], function ()
 {
-	
+
 // User
-Route::post('/Admin/addUser', 'AdminController@addUser');
-Route::post('/Admin/editUser', 'AdminController@editUser');
-Route::post('/Admin/deleteUser', 'AdminController@deleteUser');
+Route::post('/admin/addUser', 'AdminController@addUser');
+Route::post('/admin/editUser', 'AdminController@editUser');
+Route::post('/admin/deleteUser', 'AdminController@deleteUser');
 // Maison
-Route::post('/Admin/addMaison', 'AdminController@addMaison');
-Route::post('/Admin/editMaison', 'AdminController@editMaison');
-Route::post('/Admin/deleteMaison', 'AdminController@deleteMaison');
+Route::post('/admin/addMaison', 'AdminController@addMaison');
+Route::post('/admin/editMaison', 'AdminController@editMaison');
+Route::post('/admin/deleteMaison', 'AdminController@deleteMaison');
 // Consomation
-Route::post('/Admin/addConsomation', 'AdminController@addConsomation');
-Route::post('/Admin/editConsomation', 'AdminController@editConsomation');
-Route::post('/Admin/deleteConsomation', 'AdminController@deleteConsomation');
+Route::post('/admin/addConsomation', 'AdminController@addConsomation');
+Route::post('/admin/editConsomation', 'AdminController@editConsomation');
+Route::post('/admin/deleteConsomation', 'AdminController@deleteConsomation');
 });
 Route::group( ['middleware' => 'isClient'], function ()
 {
-	
+
 });
 Route::group( ['middleware' => 'isGuest'], function ()
 {
-	
+
 });
 });
 Route::group( ['middleware' => 'notAuth'], function ()
 {
-	
+
 });
