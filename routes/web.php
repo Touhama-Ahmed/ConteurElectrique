@@ -1,9 +1,11 @@
 <?php
 
 Route::get('/dashboard', 'AdminController@I_dashboard');
+Route::get('/maisons', 'AdminController@I_maisons');
+Route::get('/maison/{id}', 'AdminController@I_maison');
 Route::get('/clients', 'AdminController@I_clients');
 Route::post('/addNewClient', 'AdminController@createNewClient');
-
+Route::post('/deleteMaison', 'AdminController@deleteMaison');
 Route::get('/getVilles', 'AdminController@listVille');
 Route::group( ['middleware' => 'isAuth'], function ()
 {

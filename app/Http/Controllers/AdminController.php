@@ -15,49 +15,92 @@ class AdminController extends Controller
     public function I_dashboard(Request $request){
         return view("admin.index");
     }
-    public function I_clients(Request $request){
+    public function I_maisons(Request $request){
+        $maisons = Maison::all();
         $regions = Region::all();
-        return view("admin.clients")->with([
+        $clients = User::all();
+        return view("admin.maisons")->with([
             'regions' => $regions,
+            'maisons' => $maisons,
+            'clients' => $clients,
+        ]);
+    }
+    public function I_maison(Request $request){
+        return view("admin.singleMaison")->with([
+        ]);
+    }
+    public function I_clients(Request $request){
+        $clients = User::all();
+        return view("admin.clients")->with([
+            'clients' => $clients,
+        ]);
+    }
+    public function I_client(Request $request){
+        return view("admin.singleMaison")->with([
         ]);
     }
     public function createNewClient(Request $request){
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required | unique:users,Email_User',
-            'address' => 'required',
-            'ville' => 'required',
-            'conteur' => 'required | unique:maisons,id_Maison',
-        ]);
+        $request->validate(['clientCheck' => 'required',]);
+        $clientCheck = $request->input('clientCheck');
 
-        $dataUser = [
-            'Name_User' => $request->input('name'),
-            'Email_User' => $request->input('email'),
-            'password' => $request->input('name'),
-            'Img_User' => null,
-            'Type_User' => 1,
-        ];
+        if ($clientCheck == "true"){
 
-        // Sending data to our repository
-        $success = AdminRepository::createNewUser($dataUser);
-        if ($success){
-            $idUser = User::orderBy('id_User', 'desc')->first();
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required | unique:users,Email_User',
+                'address' => 'required',
+                'ville' => 'required',
+                'conteur' => 'required | unique:maisons,id_Maison',
+            ]);
+            $dataUser = [
+                'Name_User' => $request->input('name'),
+                'Email_User' => $request->input('email'),
+                'password' => $request->input('name'),
+                'Img_User' => null,
+                'Type_User' => 1,
+            ];
+
+            // Sending data to our repository
+            $success = AdminRepository::createNewUser($dataUser);
+            if ($success){
+                $idUser = User::orderBy('id_User', 'desc')->first();
+                $dataMaison = [
+                    'id_Maison' => $request->input('conteur'),
+                    'Adresse_Maison' => $request->input('address'),
+                    'Id_Ville' => $request->input('ville'),
+                    'Id_User' => $idUser->id_User,
+                ];
+                $success = AdminRepository::createNewMaison($dataMaison);
+                return response()->json([
+                    'Success' => $success,
+                    'id' => $idUser,
+                ]);
+            } else
+                return response()->json([
+                    'Success' => $success
+                ]);
+        } else {
+            $request->validate([
+                'client' => 'required',
+                'address' => 'required',
+                'ville' => 'required',
+                'conteur' => 'required | unique:maisons,id_Maison',
+            ]);
             $dataMaison = [
                 'id_Maison' => $request->input('conteur'),
                 'Adresse_Maison' => $request->input('address'),
                 'Id_Ville' => $request->input('ville'),
-                'Id_User' => $idUser->id_User,
+                'Id_User' => $request->input('client'),
             ];
             $success = AdminRepository::createNewMaison($dataMaison);
-            $idMaison = Maison::orderBy('id_Maison', 'desc')->first();
             return response()->json([
                 'Success' => $success,
-                'client'  => $dataMaison,
             ]);
-        } else
-            return response()->json([
-                'Success' => $success
-            ]);
+        }
+
+
+
+
     }
 
     public function listVille(Request $request){
@@ -122,7 +165,7 @@ class AdminController extends Controller
 		];
 
 		// Sending data to our repository
-		$success = RepositoryName::updateUser($request->input('id'), $data);
+		$success = AdminRepository::updateUser($request->input('id'), $data);
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([
@@ -134,7 +177,7 @@ class AdminController extends Controller
 	{
 
 		// Sending request to our repository
-		$success = RepositoryName::deleteUser($request->input('id'));
+		$success = AdminRepository::deleteUser($request->input('id'));
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([
@@ -158,7 +201,7 @@ class AdminController extends Controller
 		];
 
 		// Sending data to our repository
-		$success = RepositoryName::createNewMaison($data);
+		$success = AdminRepository::createNewMaison($data);
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([
@@ -181,7 +224,7 @@ class AdminController extends Controller
 		];
 
 		// Sending data to our repository
-		$success = RepositoryName::updateMaison($request->input('id'), $data);
+		$success = AdminRepository::updateMaison($request->input('id'), $data);
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([
@@ -193,7 +236,7 @@ class AdminController extends Controller
 	{
 
 		// Sending request to our repository
-		$success = RepositoryName::deleteMaison($request->input('id'));
+		$success = AdminRepository::deleteMaison($request->input('id'));
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([
@@ -221,7 +264,7 @@ class AdminController extends Controller
 		];
 
 		// Sending data to our repository
-		$success = RepositoryName::createNewConsomation($data);
+		$success = AdminRepository::createNewConsomation($data);
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([
@@ -249,7 +292,7 @@ class AdminController extends Controller
 		];
 
 		// Sending data to our repository
-		$success = RepositoryName::updateConsomation($request->input('id'), $data);
+		$success = AdminRepository::updateConsomation($request->input('id'), $data);
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([
@@ -261,7 +304,7 @@ class AdminController extends Controller
 	{
 
 		// Sending request to our repository
-		$success = RepositoryName::deleteConsomation($request->input('id'));
+		$success = AdminRepository::deleteConsomation($request->input('id'));
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([

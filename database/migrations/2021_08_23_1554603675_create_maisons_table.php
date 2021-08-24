@@ -17,10 +17,10 @@ class CreateMaisonsTable extends Migration
 			$table->bigIncrements('id_Maison');
 			$table->string('Adresse_Maison')->nullable();
 			$table->unsignedBigInteger('Id_Ville');
-			$table->unsignedBigInteger('Id_User')->unique();
+			$table->unsignedBigInteger('Id_User');
 			$table->timestamps();
-			 
-			 
+
+
 			$table->foreign('Id_Ville')->references('id_Ville')->on('villes');
 			$table->foreign('Id_User')->references('id_User')->on('users');
         });
