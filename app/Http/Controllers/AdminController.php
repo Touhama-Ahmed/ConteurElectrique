@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Maison;
+use App\Region;
+use App\User;
 use Illuminate\Http\Request;
 // imports
 use App\Repository\AdminRepository;
@@ -13,12 +16,71 @@ class AdminController extends Controller
         return view("admin.index");
     }
     public function I_clients(Request $request){
-        return view("admin.clients");
+        $regions = Region::all();
+        return view("admin.clients")->with([
+            'regions' => $regions,
+        ]);
+    }
+    public function createNewClient(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required | unique:users,Email_User',
+            'address' => 'required',
+            'ville' => 'required',
+            'conteur' => 'required | unique:maisons,id_Maison',
+        ]);
+
+        $dataUser = [
+            'Name_User' => $request->input('name'),
+            'Email_User' => $request->input('email'),
+            'password' => $request->input('name'),
+            'Img_User' => null,
+            'Type_User' => 1,
+        ];
+
+        // Sending data to our repository
+        $success = AdminRepository::createNewUser($dataUser);
+        if ($success){
+            $idUser = User::orderBy('id_User', 'desc')->first();
+            $dataMaison = [
+                'id_Maison' => $request->input('conteur'),
+                'Adresse_Maison' => $request->input('address'),
+                'Id_Ville' => $request->input('ville'),
+                'Id_User' => $idUser->id_User,
+            ];
+            $success = AdminRepository::createNewMaison($dataMaison);
+            $idMaison = Maison::orderBy('id_Maison', 'desc')->first();
+            return response()->json([
+                'Success' => $success,
+                'client'  => $dataMaison,
+            ]);
+        } else
+            return response()->json([
+                'Success' => $success
+            ]);
+    }
+
+    public function listVille(Request $request){
+        $request->validate([
+            'region' => 'required',
+        ]);
+        $idRegion = $request->input('region');
+        $region = Region::find($idRegion);
+
+        if ($region != null){
+            $villes = $region->getAllVilles();
+            return response()->json([
+                'Success' => 1,
+                'villes'  => $villes,
+            ]);
+        } else
+            return response()->json([
+                'Success' => false,
+            ]);
     }
     // controller functions
 	public function addUser(Request $request)
 	{
-
 		$request->validate([
 			'Email' => 'required | unique:users,Email_User',
 			'password' => 'required',
@@ -26,7 +88,7 @@ class AdminController extends Controller
 		]);
 
 		$data = [
-			'Name_User' => null,
+			'Name_User' => $request->input('name'),
 			'Email_User' => $request->input('Email'),
 			'password' => $request->input('password'),
 			'Img_User' => null,
@@ -34,7 +96,7 @@ class AdminController extends Controller
 		];
 
 		// Sending data to our repository
-		$success = RepositoryName::createNewUser($data);
+		$success = AdminRepository::createNewUser($data);
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([
@@ -85,6 +147,7 @@ class AdminController extends Controller
 
 		$request->validate([
 			'Id_Ville' => 'required',
+			'Adresse_Maison' => 'required',
 			'Id_User' => 'required | unique:maisons,Id_User',
 		]);
 

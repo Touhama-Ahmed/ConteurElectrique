@@ -10,15 +10,18 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-            For more information about DataTables, please visit the <a target="_blank"
-                                                                       href="https://datatables.net">official DataTables documentation</a>.</p>
+        <h1 class="h3 mb-2 text-gray-800">CLIENTS</h1>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary">
+                    Listes des clients
+                    <a class="btn btn-success btn-circle float-right" target="_blank" href="#" data-toggle="modal" data-target="#addClientModal">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </h6>
+
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -508,6 +511,7 @@
 
     </div>
     <!-- /.container-fluid -->
+    @include('modals.addNewClient')
 @endsection
 
 @section('JsFooter')
@@ -517,5 +521,57 @@
 
     <!-- Page level custom scripts -->
     <script type="text/javascript" src="js/demo/datatables-demo.js"></script>
+    <script type="text/javascript">
+        $( "#region" ).change(function() {
+            var region = $(this).val();
+            if(region != null) {
+                $.ajax({
+                    type: "GET",
+                    url: '/getVilles',
+                    data: jQuery.param({ region : region,}),
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    processData: false,
+                    dataType: "json",
+                    success: function (data) {
+                        var ville = $('#ville');
+                        if (data.Success === 1) {
+                            ville.find('option').remove();
+                            for(var i = 0; i < data.villes.length; i++)
+                                ville.append('<option value="'+data.villes[i].id_Ville +'">'+data.villes[i].Ville_Ville+'</option>')
+                        } else {
+                            ville.find('option').remove().end().append('<option>--------</option>');
+                        }
+                    }
+                });
+            }
+        });
+
+        function addClient() {
+
+            var conteur = $("#id").val();
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var ville = $("#ville").val();
+            var address = $("#address").val();
+            alert("g");
+            $.ajax({
+                type: "POST",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: '/addNewClient',
+                data: jQuery.param({ "_token": "{{ csrf_token() }}",name : name,email : email,conteur : conteur,ville : ville,address : address}),
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                processData: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.Success === 1) {
+                        alert("success");
+                    } else {
+                        alert("failed");
+                    }
+                }
+            });
+            alert("g2");
+        }
+    </script>
     <!-- END PAGE LEVEL JS-->
 @endsection

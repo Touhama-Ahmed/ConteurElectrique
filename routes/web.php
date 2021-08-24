@@ -2,7 +2,9 @@
 
 Route::get('/dashboard', 'AdminController@I_dashboard');
 Route::get('/clients', 'AdminController@I_clients');
+Route::post('/addNewClient', 'AdminController@createNewClient');
 
+Route::get('/getVilles', 'AdminController@listVille');
 Route::group( ['middleware' => 'isAuth'], function ()
 {
 
