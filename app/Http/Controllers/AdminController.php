@@ -25,8 +25,14 @@ class AdminController extends Controller
             'clients' => $clients,
         ]);
     }
-    public function I_maison(Request $request){
+    public function I_maison($id){
+        $maison = Maison::find($id);
+        $consomation = $maison->getAllConsomations();
+        $lastConsomation = $maison->getLastConsomations();
         return view("admin.singleMaison")->with([
+            'maison' => $maison,
+            'consomations' => $consomation,
+            'lastConsomation' => $lastConsomation,
         ]);
     }
     public function I_clients(Request $request){
@@ -121,6 +127,7 @@ class AdminController extends Controller
                 'Success' => false,
             ]);
     }
+
     // controller functions
 	public function addUser(Request $request)
 	{
@@ -253,12 +260,12 @@ class AdminController extends Controller
 		]);
 
 		$data = [
-			'Courrant_Consomation' => null,
-			'Tension_Consomation' => null,
-			'Energie_Consomation' => null,
-			'Facteurpuissance_Consomation' => null,
-			'Frequence_Consomation' => null,
-			'PuissanceW_Consomation' => null,
+			'Courrant_Consomation' => $request->input('courrant'),
+			'Tension_Consomation' => $request->input('tension'),
+			'Energie_Consomation' => $request->input('energie'),
+			'Facteurpuissance_Consomation' => $request->input('Fpuissance'),
+			'Frequence_Consomation' => $request->input('frequence'),
+			'PuissanceW_Consomation' => $request->input('puissance'),
 			'Isactive_Consomation' => $request->input('Isactive'),
 			'Id_Maison' => $request->input('Id_Maison'),
 		];
@@ -266,10 +273,28 @@ class AdminController extends Controller
 		// Sending data to our repository
 		$success = AdminRepository::createNewConsomation($data);
 		// returning results
-		//return back()->with('Success', $status);
-		return response()->json([
-		'Success' => $success
+        if ($success)
+		return back()->with(['success_msg'=>'Success!']);
+        return back()->with('error_msg','Erreur !!');
+
+	}
+	public function setConsomation(Request $request)
+	{
+		$request->validate([
+			'isActive' => 'required',
+			'id' => 'required',
 		]);
+        $isActive = ($request->input('isActive') == "true")?0:1;
+		$data = [
+			'Isactive_Consomation' => $isActive,
+		];
+        $id_Consomation = $request->input('id');
+
+		$success = AdminRepository::updateConsomation($id_Consomation,$data);
+		// returning results
+        return response()->json([
+            'Success' => $success
+        ]);
 
 	}
 	public function editConsomation(Request $request)

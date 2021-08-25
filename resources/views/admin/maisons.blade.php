@@ -71,7 +71,7 @@
 
     </div>
     <!-- /.container-fluid -->
-    @include('modals.addNewClient')
+    @include('modals.addNewMaison')
 @endsection
 
 @section('JsFooter')

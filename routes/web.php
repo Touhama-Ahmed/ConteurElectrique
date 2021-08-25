@@ -5,6 +5,8 @@ Route::get('/maisons', 'AdminController@I_maisons');
 Route::get('/maison/{id}', 'AdminController@I_maison');
 Route::get('/clients', 'AdminController@I_clients');
 Route::post('/addNewClient', 'AdminController@createNewClient');
+Route::post('/addConsomation', 'AdminController@addConsomation');
+Route::post('/setConsomation', 'AdminController@setConsomation');
 Route::post('/deleteMaison', 'AdminController@deleteMaison');
 Route::get('/getVilles', 'AdminController@listVille');
 Route::group( ['middleware' => 'isAuth'], function ()
@@ -22,7 +24,7 @@ Route::post('/admin/addMaison', 'AdminController@addMaison');
 Route::post('/admin/editMaison', 'AdminController@editMaison');
 Route::post('/admin/deleteMaison', 'AdminController@deleteMaison');
 // Consomation
-Route::post('/admin/addConsomation', 'AdminController@addConsomation');
+//Route::post('/admin/addConsomation', 'AdminController@addConsomation');
 Route::post('/admin/editConsomation', 'AdminController@editConsomation');
 Route::post('/admin/deleteConsomation', 'AdminController@deleteConsomation');
 });
