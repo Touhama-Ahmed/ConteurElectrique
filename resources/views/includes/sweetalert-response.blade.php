@@ -1,7 +1,6 @@
 <!-- notification sweet alert -->
 @if(session()->has('success_msg'))
     <!-- SWEET ALERT JS -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         Swal.fire({
             title: 'BRAVO !',
@@ -16,7 +15,6 @@
     {{--        handling validation errors--}}
 @elseif($errors->any())
     <!-- SWEET ALERT JS -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         $text = '';
         @foreach ($errors->all() as $error)
@@ -34,7 +32,6 @@
     </script>
 @elseif(session()->has('error_msg'))
     <!-- SWEET ALERT JS -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         Swal.fire({
             title: 'Erreur !',

@@ -342,7 +342,7 @@
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                url: '/setConsomation',
+                url: '/admin/setConsomation',
                 data: jQuery.param({
                     "_token": "{{ csrf_token() }}",
                     id: id,
@@ -375,7 +375,7 @@
                     $.ajax({
                         type: "POST",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        url: '/deleteMaison',
+                        url: '/admin/deleteMaison',
                         data: jQuery.param({
                             "_token": "{{ csrf_token() }}",
                             id: id,

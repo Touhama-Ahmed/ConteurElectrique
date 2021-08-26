@@ -45,7 +45,7 @@ class AdminController extends Controller
         return view("admin.singleMaison")->with([
         ]);
     }
-    public function createNewClient(Request $request){
+    public function createNewMaison(Request $request){
         $request->validate(['clientCheck' => 'required',]);
         $clientCheck = $request->input('clientCheck');
 
@@ -132,25 +132,26 @@ class AdminController extends Controller
 	public function addUser(Request $request)
 	{
 		$request->validate([
-			'Email' => 'required | unique:users,Email_User',
-			'password' => 'required',
-			'Type' => 'required',
+			'email' => 'required | unique:users,Email_User',
+			'type' => 'required',
 		]);
 
 		$data = [
 			'Name_User' => $request->input('name'),
-			'Email_User' => $request->input('Email'),
-			'password' => $request->input('password'),
+			'Email_User' => $request->input('email'),
+			'password' => $request->input('name'),
 			'Img_User' => null,
-			'Type_User' => $request->input('Type'),
+			'Type_User' => $request->input('type'),
 		];
 
 		// Sending data to our repository
 		$success = AdminRepository::createNewUser($data);
+        $idUser = User::orderBy('id_User', 'desc')->first();
 		// returning results
 		//return back()->with('Success', $status);
 		return response()->json([
-		'Success' => $success
+		'Success' => $success,
+            'idUser' => $idUser->id_User,
 		]);
 
 	}

@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/addConsomation" method="post">
+                <form action="/admin/addConsomation" method="post">
                     @csrf
                     <input type="text" value="{{$maison->id_Maison}}" name="Id_Maison" hidden>
                     <input type="text" value="{{($lastConsomation != null)?$lastConsomation->Isactive_Consomation:0}}" name="Isactive" hidden>

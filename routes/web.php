@@ -1,14 +1,17 @@
 <?php
 
-Route::get('/dashboard', 'AdminController@I_dashboard');
-Route::get('/maisons', 'AdminController@I_maisons');
-Route::get('/maison/{id}', 'AdminController@I_maison');
-Route::get('/clients', 'AdminController@I_clients');
-Route::post('/addNewClient', 'AdminController@createNewClient');
-Route::post('/addConsomation', 'AdminController@addConsomation');
-Route::post('/setConsomation', 'AdminController@setConsomation');
-Route::post('/deleteMaison', 'AdminController@deleteMaison');
-Route::get('/getVilles', 'AdminController@listVille');
+Route::get('/admin', 'AdminController@I_dashboard');
+Route::get('/admin/maisons', 'AdminController@I_maisons');
+Route::get('/admin/maison/{id}', 'AdminController@I_maison');
+Route::get('/admin/clients', 'AdminController@I_clients');
+Route::post('/admin/addNewMaison', 'AdminController@createNewMaison');
+Route::post('/admin/addNewClient', 'AdminController@addUser');
+Route::post('/admin/deleteUser', 'AdminController@deleteUser');
+Route::post('/admin/addConsomation', 'AdminController@addConsomation');
+Route::get('/addConsomation', 'ApiController@addConsomation');
+Route::post('/admin/setConsomation', 'AdminController@setConsomation');
+Route::post('/admin/deleteMaison', 'AdminController@deleteMaison');
+Route::get('/admin/getVilles', 'AdminController@listVille');
 Route::group( ['middleware' => 'isAuth'], function ()
 {
 
@@ -18,7 +21,7 @@ Route::group( ['middleware' => 'isAdmin'], function ()
 // User
 Route::post('/admin/addUser', 'AdminController@addUser');
 Route::post('/admin/editUser', 'AdminController@editUser');
-Route::post('/admin/deleteUser', 'AdminController@deleteUser');
+//Route::post('/admin/deleteUser', 'AdminController@deleteUser');
 // Maison
 Route::post('/admin/addMaison', 'AdminController@addMaison');
 Route::post('/admin/editMaison', 'AdminController@editMaison');

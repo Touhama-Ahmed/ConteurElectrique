@@ -18,7 +18,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">
                     Listes des maisons
                     <a class="btn btn-success btn-circle float-right" target="_blank" href="#" data-toggle="modal"
-                       data-target="#addClientModal">
+                       data-target="#addMaisonModal">
                         <i class="fas fa-plus"></i>
                     </a>
                 </h6>
@@ -56,7 +56,7 @@
                                 <td>{{$maison->getVille()->Ville_Ville}}</td>
                                 <td>{{$maison->Adresse_Maison}}</td>
                                 <td>
-                                    <a href="/maison/{{$maison->id_Maison}}" class="iconEye"><i class="fas fa-eye"></i></a>
+                                    <a href="/admin/maison/{{$maison->id_Maison}}" class="iconEye"><i class="fas fa-eye"></i></a>
                                     <a href="#" class="iconEdit"><i class="fas fa-edit"></i></a>
                                     <a class="iconTrash" onclick="deleteClient({{$maison->id_Maison}})"><i
                                             class="fas fa-trash"></i></a>
@@ -91,7 +91,7 @@
                 if (region != null) {
                     $.ajax({
                         type: "GET",
-                        url: '/getVilles',
+                        url: '/admin/getVilles',
                         data: jQuery.param({region: region,}),
                         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                         processData: false,
@@ -135,7 +135,7 @@
                 $.ajax({
                     type: "POST",
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: '/addNewClient',
+                    url: '/admin/addNewMaison',
                     data: jQuery.param({
                         "_token": "{{ csrf_token() }}",
                         name: name,
@@ -190,7 +190,7 @@
                         $.ajax({
                             type: "POST",
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            url: '/deleteMaison',
+                            url: '/admin/deleteMaison',
                             data: jQuery.param({
                                 "_token": "{{ csrf_token() }}",
                                 id: id,

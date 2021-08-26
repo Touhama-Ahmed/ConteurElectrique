@@ -43,14 +43,14 @@
                             <th>Action</th>
                         </tr>
                         </tfoot>
-                        <tbody id="listMaison">
+                        <tbody id="listClient">
                         @foreach($clients as $client)
-                            <tr id="Maison{{$client->id_User}}">
+                            <tr id="Client{{$client->id_User}}">
                                 <td>{{$client->id_User}}</td>
                                 <td>{{$client->Name_User}}</td>
                                 <td>{{$client->Email_User}}</td>
                                 <td>
-                                    <a href="/maison/{{$client->id_User}}" class="iconEye"><i class="fas fa-eye"></i></a>
+                                    <a href="/client/{{$client->id_User}}" class="iconEye"><i class="fas fa-eye"></i></a>
                                     <a href="#" class="iconEdit"><i class="fas fa-edit"></i></a>
                                     <a class="iconTrash" onclick="deleteClient({{$client->id_User}})"><i
                                             class="fas fa-trash"></i></a>
@@ -65,6 +65,7 @@
 
     </div>
     <!-- /.container-fluid -->
+    @include('modals.addNewClient')
 @endsection
 
 @section('JsFooter')
@@ -78,28 +79,18 @@
 
         function addClient() {
 
-            var conteur = $("#id").val();
             var name = $("#name").val();
             var email = $("#email").val();
-            var ville = $("#ville :selected").val();
-            var address = $("#address").val();
-            var client = $("#client :selected").val();
-            var clientName = $("#client :selected").text();
-            var clientCheck = $("#clientCheck").is(":checked");
-            var client_name = ($("#clientCheck").is(":checked"))? name: clientName;
+            var type = $("#type").val();
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                url: '/addNewClient',
+                url: '/admin/addNewClient',
                 data: jQuery.param({
                     "_token": "{{ csrf_token() }}",
                     name: name,
                     email: email,
-                    conteur: conteur,
-                    ville: ville,
-                    address: address,
-                    clientCheck: clientCheck,
-                    client: client,
+                    type: type,
                 }),
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 processData: false,
@@ -107,21 +98,16 @@
                 success: function (data) {
                     if (data.Success === true) {
                         alert("success");
-                        $("#listMaison tr:first").before("<tr id=\"Maison" + conteur + "\">" +
-                            "                                <td>" + conteur + "</td>" +
-                            "                                <td>" + client_name + "</td>" +
-                            "                                <td>" + $("#region option:selected").text() + "</td>" +
-                            "                                <td>" + $("#ville option:selected").text() + "</td>" +
-                            "                                <td>" + address + "</td>" +
+                        $("#listClient tr:first").before("<tr id=\"Client" + data.idUser + "\">" +
+                            "                                <td>" + data.idUser + "</td>" +
+                            "                                <td>" + name + "</td>" +
+                            "                                <td>" + email + "</td>" +
                             "                                <td>" +
                             "                                    <a href=\"#\" class=\"iconEye\"><i class=\"fas fa-eye\"></i></a>" +
                             "                                    <a href=\"#\" class=\"iconEdit\"><i class=\"fas fa-edit\"></i></a>" +
-                            "                                    <a class=\"iconTrash\" onclick=\"deleteClient(" + conteur + ")\"><i class=\"fas fa-trash\"></i></a>" +
+                            "                                    <a class=\"iconTrash\" onclick=\"deleteClient(" + data.idUser + ")\"><i class=\"fas fa-trash\"></i></a>" +
                             "                                </td>" +
                             "                            </tr>");
-                        if ($("#clientCheck").is(":checked")){
-                            $("#client option:first").before('<option value="'+data.id+'">'+client_name+'</option>');
-                        }
                         $('#addClientModal').modal('toggle');
                     } else {
                         alert("failed");
@@ -145,7 +131,7 @@
                     $.ajax({
                         type: "POST",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        url: '/deleteMaison',
+                        url: '/admin/deleteUser',
                         data: jQuery.param({
                             "_token": "{{ csrf_token() }}",
                             id: id,
@@ -155,10 +141,10 @@
                         dataType: "json",
                         success: function (data) {
                             if (data.Success === true) {
-                                $("#Maison" + id).remove();
+                                $("#Client" + id).remove();
                                 Swal.fire(
                                     'Supprimer!',
-                                    'Maison a été supprimé',
+                                    'Client a été supprimé',
                                     'success'
                                 );
                             } else {
