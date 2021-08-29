@@ -17,10 +17,10 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
                     Listes des maisons
-                    <a class="btn btn-success btn-circle float-right" target="_blank" href="#" data-toggle="modal"
+                    <button type="button" class="btn btn-success btn-circle float-right" target="_blank"  data-toggle="modal"
                        data-target="#addMaisonModal">
                         <i class="fas fa-plus"></i>
-                    </a>
+                    </button>
                 </h6>
 
             </div>
