@@ -78,6 +78,6 @@
 <script src="/js/demo/chart-pie-demo.js"></script>
 <!-- JsFooter -->
 @yield('JsFooter')
-    @include('Includes.sweetalert-response')
+    @include('includes.sweetalert-response')
 </body>
 </html>
