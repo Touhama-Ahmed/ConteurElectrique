@@ -9,7 +9,7 @@ class ApiController extends Controller
 {
     public function addConsomation(Request $request)
     {
-//        http://127.0.0.1:8000/addConsomations?Id_Maison=123&Isactive=1&courrant=14&tension=2&energie=45&Fpuissance=3&frequence=47&puissance=14
+//        http://127.0.0.1:8000/addConsomation?Id_Maison=123&Isactive=1&courrant=14&tension=2&energie=45&Fpuissance=3&frequence=47&puissance=14
         $request->validate([
             'Isactive' => 'required',
             'Id_Maison' => 'required',

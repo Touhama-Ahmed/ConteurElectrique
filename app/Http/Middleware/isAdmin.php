@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class isAdmin
 {
@@ -15,7 +16,7 @@ class isAdmin
      */
     public function handle($request, Closure $next)
     {
-        if( Auth::user()->Type_User == -1)
+        if( Auth::user()->Type_User == -99)
                     return $next($request);
                 return abort('404');
     }

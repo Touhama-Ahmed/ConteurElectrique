@@ -167,7 +167,7 @@
                             if ($("#clientCheck").is(":checked")){
                                 $("#client option:first").before('<option value="'+data.id+'">'+client_name+'</option>');
                             }
-                            $('#addClientModal').modal('toggle');
+                            $('#addMaisonModal').modal('toggle');
                         } else {
                             alert("failed");
                         }

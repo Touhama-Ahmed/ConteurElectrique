@@ -1,11 +1,11 @@
 <?php
 
 namespace App;
-
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
 
-class User extends Model
+class User extends Authenticatable
 {
     protected $guarded = [];
     protected $primaryKey = 'id_User';
