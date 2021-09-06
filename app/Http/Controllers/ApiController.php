@@ -30,8 +30,14 @@ class ApiController extends Controller
         $success = AdminRepository::createNewConsomation($data);
         // returning results
         if ($success)
-            return back()->with(['success_msg'=>'Success!']);
-        return back()->with('error_msg','Erreur !!');
+            return response()->json([
+                'result' => "success",
+            ]);
+        return response()->json([
+            'result' => "error",
+        ]);
+//            return back()->with(['success_msg'=>'Success!']);
+//        return back()->with('error_msg','Erreur !!');
 
     }
 }
