@@ -51,15 +51,21 @@ class AdminController extends Controller
 
     public function I_clients(Request $request)
     {
-        $clients = User::all();
+        $clients = User::getAllClient();
         return view("admin.clients")->with([
             'clients' => $clients,
         ]);
     }
 
-    public function I_client(Request $request)
+    public function I_client($id)
     {
-        return view("admin.singleMaison")->with([
+        $client = User::find($id);
+        $maisons = $client->getAllMaisons();
+        $regions = Region::all();
+        return view("admin.singleClient")->with([
+            'client' => $client,
+            'maisons' => $maisons,
+            'regions' => $regions,
         ]);
     }
 

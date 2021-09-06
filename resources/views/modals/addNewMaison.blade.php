@@ -1,16 +1,19 @@
 <!-- addnew maison Modal-->
-<div class="modal fade bd-example-modal-lg" id="addMaisonModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade bd-example-modal-lg" id="addMaisonModal" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title w-100" id="exampleModalLabel">
                     Nouvelle Maison
-                    <label class="switch float-right ml-2">
-                        <input type="checkbox" id="clientCheck" name="clientCheck" onchange="clientCheck()">
-                        <span class="slider round"></span>
-                    </label>
-                    <label class="float-right">Nouveau client</label>
+                    @if(!Request::is('admin/client/*'))
+                        <label class="switch float-right ml-2">
+                            <input type="checkbox" id="clientCheck" name="clientCheck" onchange="clientCheck()">
+                            <span class="slider round"></span>
+                        </label>
+                        <label class="float-right">Nouveau client</label>
+                    @endif
                 </h5>
                 <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -41,9 +44,13 @@
                             <div class="form-group">
                                 <label for="client" class="col-form-label">Client:</label>
                                 <select class="form-control" id="client" name="client">
-                                    @foreach($clients as $client)
+                                    @if(Request::is('admin/client/*'))
                                         <option value="{{$client->id_User}}">{{$client->Name_User}}</option>
-                                    @endforeach
+                                    @else
+                                        @foreach($clients as $client)
+                                            <option value="{{$client->id_User}}">{{$client->Name_User}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -59,8 +66,8 @@
                                 <select class="form-control" id="region" name="region">
                                     <option>--------</option>
                                     @foreach($regions as $region)
-                                    <option value="{{$region->id_Region}}">{{$region->Region_Region}}</option>
-                                        @endforeach
+                                        <option value="{{$region->id_Region}}">{{$region->Region_Region}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

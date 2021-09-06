@@ -47,6 +47,10 @@ class User extends Authenticatable
     }
 
     //methods
+    static function getAllClient(){
+        return User::where('Type_User', 1)->orderBy('created_at','asc')->get();
+        //returns array of Maisons
+    }
 
     public function getAllMaisons(){
         return Maison::where('Id_User', $this->id_User)->orderBy('created_at','desc')->get();

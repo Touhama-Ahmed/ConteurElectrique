@@ -28,7 +28,7 @@ class GuestController extends Controller
                 case -99:
                     return redirect('/admin');
                 case 1:
-                    return redirect('/client/maison');
+                    return redirect('/client/maisons');
                 default: abort(404);
             }
         }

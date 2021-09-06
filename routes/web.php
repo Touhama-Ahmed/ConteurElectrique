@@ -15,6 +15,7 @@ Route::group( ['middleware' => 'isAdmin'], function ()
     Route::get('/admin/maisons', 'AdminController@I_maisons');
     Route::get('/admin/maison/{id}', 'AdminController@I_maison');
     Route::get('/admin/clients', 'AdminController@I_clients');
+    Route::get('/admin/client/{id}', 'AdminController@I_client');
     Route::post('/admin/addNewMaison', 'AdminController@createNewMaison');
     Route::post('/admin/addNewClient', 'AdminController@addUser');
     Route::post('/admin/deleteUser', 'AdminController@deleteUser');

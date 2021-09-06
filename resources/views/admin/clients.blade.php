@@ -50,7 +50,7 @@
                                 <td>{{$client->Name_User}}</td>
                                 <td>{{$client->Email_User}}</td>
                                 <td>
-                                    <a href="/client/{{$client->id_User}}" class="iconEye"><i class="fas fa-eye"></i></a>
+                                    <a href="/admin/client/{{$client->id_User}}" class="iconEye"><i class="fas fa-eye"></i></a>
                                     <a href="#" class="iconEdit"><i class="fas fa-edit"></i></a>
                                     <a class="iconTrash" onclick="deleteClient({{$client->id_User}})"><i
                                             class="fas fa-trash"></i></a>
