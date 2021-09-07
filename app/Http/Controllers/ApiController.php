@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Maison;
 use App\Repository\AdminRepository;
 use Illuminate\Http\Request;
 
@@ -36,8 +37,28 @@ class ApiController extends Controller
         return response()->json([
             'result' => ";@error@;",
         ]);
-//            return back()->with(['success_msg'=>'Success!']);
-//        return back()->with('error_msg','Erreur !!');
+    }
+    public function isActivate(Request $request)
+    {
+//        http://127.0.0.1:8000/isActivate?id_Maison=123
+        $request->validate([
+            'id_Maison' => 'required',
+        ]);
 
+
+        $id_Maison = $request->input('id_Maison');
+
+
+        // Sending data to our repository
+        $maison = Maison::find($id_Maison);
+        $lastConsomation = $maison->getLastConsomations();
+        // returning results
+        if ($lastConsomation->Isactive_Consomation)
+            return response()->json([
+                'result' => ";@success@;",
+            ]);
+        return response()->json([
+            'result' => ";@error@;",
+        ]);
     }
 }
