@@ -31,10 +31,10 @@ class ApiController extends Controller
         // returning results
         if ($success)
             return response()->json([
-                'result' => "success",
+                'result' => ";@success@;",
             ]);
         return response()->json([
-            'result' => "error",
+            'result' => ";@error@;",
         ]);
 //            return back()->with(['success_msg'=>'Success!']);
 //        return back()->with('error_msg','Erreur !!');
