@@ -103,7 +103,7 @@
                             "                                <td>" + name + "</td>" +
                             "                                <td>" + email + "</td>" +
                             "                                <td>" +
-                            "                                    <a href=\"#\" class=\"iconEye\"><i class=\"fas fa-eye\"></i></a>" +
+                            "                                    <a href=\"/admin/client/" + data.idUser + "\" class=\"iconEye\"><i class=\"fas fa-eye\"></i></a>" +
                             "                                    <a href=\"#\" class=\"iconEdit\"><i class=\"fas fa-edit\"></i></a>" +
                             "                                    <a class=\"iconTrash\" onclick=\"deleteClient(" + data.idUser + ")\"><i class=\"fas fa-trash\"></i></a>" +
                             "                                </td>" +

@@ -159,7 +159,7 @@
                                 "                                <td>" + $("#ville option:selected").text() + "</td>" +
                                 "                                <td>" + address + "</td>" +
                                 "                                <td>" +
-                                "                                    <a href=\"#\" class=\"iconEye\"><i class=\"fas fa-eye\"></i></a>" +
+                                "                                    <a href=\"/admin/maison/" + conteur + "\" class=\"iconEye\"><i class=\"fas fa-eye\"></i></a>" +
                                 "                                    <a href=\"#\" class=\"iconEdit\"><i class=\"fas fa-edit\"></i></a>" +
                                 "                                    <a class=\"iconTrash\" onclick=\"deleteClient(" + conteur + ")\"><i class=\"fas fa-trash\"></i></a>" +
                                 "                                </td>" +
