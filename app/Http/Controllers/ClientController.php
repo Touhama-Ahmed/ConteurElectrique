@@ -25,10 +25,12 @@ class ClientController extends Controller
         $maison = Maison::find($id);
         $consomation = $maison->getAllConsomations();
         $lastConsomation = $maison->getLastConsomations();
+        $nbConsomations = $maison->isConsomations();
         return view("client.singleMaison")->with([
             'maison' => $maison,
             'consomations' => $consomation,
             'lastConsomation' => $lastConsomation,
+            'nbConsomations' => $nbConsomations,
         ]);
     }
 

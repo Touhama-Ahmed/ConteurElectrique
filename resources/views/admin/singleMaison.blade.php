@@ -21,6 +21,7 @@
         </div>
 
         <!-- Content Row -->
+        @if($nbConsomations > 0)
         <div class="row">
             <!-- Courrant (Amper) -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -140,6 +141,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
         <!-- Content Row -->
 
@@ -172,7 +174,7 @@
                         <div class="card-body">
                             <div class="pt-2 pb-2">
                                 <div class="form-group">
-
+                                    @if($nbConsomations > 0)
                                     <h3 class="col-form-label">Elec <label class="switch float-right ml-2">
                                             <input type="checkbox" id="clientCheck" name="clientCheck" onchange="consomationCheck({{$lastConsomation->Isactive_Consomation}})"
                                             @if($lastConsomation != null)
@@ -184,7 +186,7 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </h3>
-
+                                    @endif
                                     <h3 class="col-form-label">Propriétaire <span class="float-right">{{$maison->getUser()->Name_User}}</span></h3>
 
                                     <h3 class="col-form-label">ID Conteur <span class="float-right" id="MaisonId">{{$maison->id_Maison}}</span></h3>
@@ -203,8 +205,10 @@
                     </div>
                 </div>
                 <div class="col-12">
+                    @if($nbConsomations > 0)
                     <input type="text" id="puissance" value="{{$lastConsomation->PuissanceW_Consomation}}" hidden>
                     <input type="text" id="energie" value="{{$lastConsomation->Energie_Consomation}}" hidden>
+                    @endif
                     <!-- Pie Chart -->
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
@@ -305,6 +309,7 @@
                                 </tr>
                                 </tfoot>
                                 <tbody id="listMaison">
+                                @if($nbConsomations > 0)
                                 @foreach($consomations as $consomation)
                                     <tr id="Maison{{$consomation->id_Consomation}}">
                                         <td>{{$consomation->created_at}}</td>
@@ -316,6 +321,7 @@
                                         <td>{{$consomation->PuissanceW_Consomation}}</td>
                                     </tr>
                                 @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -336,6 +342,7 @@
 
     <!-- Page level custom scripts -->
     <script type="text/javascript" src="/js/demo/datatables-demo.js"></script>
+    @if($nbConsomations > 0)
     <script type="text/javascript">
         function consomationCheck(check) {
             var id= {{$lastConsomation->id_Consomation}};
@@ -360,50 +367,7 @@
                 }
             });
         }
-        function deleteClient(id) {
-            Swal.fire({
-                title: 'Etes-vous sur?',
-                text: "Vous ne pouvez plus récuperer ces données!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Oui, supprimer!',
-                cancelButtonText: 'Annuler',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        url: '/admin/deleteMaison',
-                        data: jQuery.param({
-                            "_token": "{{ csrf_token() }}",
-                            id: id,
-                        }),
-                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                        processData: false,
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.Success === true) {
-                                $("#Maison" + id).remove();
-                                Swal.fire(
-                                    'Supprimer!',
-                                    'Maison a été supprimé',
-                                    'success'
-                                );
-                            } else {
-                                Swal.fire(
-                                    'Attention!',
-                                    'une erreur est survenue',
-                                    'error'
-                                );
-                            }
-                        }
-                    });
-                }
-            })
-        }
-
     </script>
+    @endif
     <!-- END PAGE LEVEL JS-->
 @endsection

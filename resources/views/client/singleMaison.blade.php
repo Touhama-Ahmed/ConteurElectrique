@@ -15,7 +15,7 @@
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                     class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
         </div>
-
+    @if($nbConsomations > 0)
         <!-- Content Row -->
         <div class="row">
             <!-- Courrant (Amper) -->
@@ -136,7 +136,7 @@
                 </div>
             </div>
         </div>
-
+        @endif
         <!-- Content Row -->
 
         <div class="row">
@@ -168,7 +168,7 @@
                         <div class="card-body">
                             <div class="pt-2 pb-2">
                                 <div class="form-group">
-
+                                    @if($nbConsomations > 0)
                                     <h3 class="col-form-label">Elec <label class="switch float-right ml-2">
                                             <input type="checkbox" id="clientCheck" name="clientCheck" disabled
                                             @if($lastConsomation != null)
@@ -180,6 +180,7 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </h3>
+                                    @endif
 
                                     <h3 class="col-form-label">Propriétaire <span class="float-right">{{$maison->getUser()->Name_User}}</span></h3>
 
@@ -199,8 +200,10 @@
                     </div>
                 </div>
                 <div class="col-12">
+                    @if($nbConsomations > 0)
                     <input type="text" id="puissance" value="{{$lastConsomation->PuissanceW_Consomation}}" hidden>
                     <input type="text" id="energie" value="{{$lastConsomation->Energie_Consomation}}" hidden>
+                    @endif
                     <!-- Pie Chart -->
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
@@ -301,6 +304,7 @@
                                 </tr>
                                 </tfoot>
                                 <tbody id="listMaison">
+                                @if($nbConsomations > 0)
                                 @foreach($consomations as $consomation)
                                     <tr id="Maison{{$consomation->id_Consomation}}">
                                         <td>{{$consomation->created_at}}</td>
@@ -312,6 +316,7 @@
                                         <td>{{$consomation->PuissanceW_Consomation}}</td>
                                     </tr>
                                 @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

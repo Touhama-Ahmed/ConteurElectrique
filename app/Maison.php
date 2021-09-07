@@ -64,5 +64,9 @@ class Maison extends Model
         return Consomation::where('Id_Maison', $this->id_Maison)->orderBy('created_at','desc')->first();
         //returns an object of Consomations
     }
+    public function isConsomations(){
+        return Consomation::where('Id_Maison', $this->id_Maison)->count();
+        //returns array of Consomations
+    }
 
 }

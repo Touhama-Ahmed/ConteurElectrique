@@ -40,12 +40,14 @@ class AdminController extends Controller
     public function I_maison($id)
     {
         $maison = Maison::find($id);
+        $nbConsomations = $maison->isConsomations();
         $consomation = $maison->getAllConsomations();
         $lastConsomation = $maison->getLastConsomations();
         return view("admin.singleMaison")->with([
             'maison' => $maison,
             'consomations' => $consomation,
             'lastConsomation' => $lastConsomation,
+            'nbConsomations' => $nbConsomations,
         ]);
     }
 
