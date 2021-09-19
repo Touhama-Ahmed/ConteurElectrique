@@ -11,6 +11,7 @@ Route::group( ['middleware' => 'isAuth'], function ()
 
 Route::group( ['middleware' => 'isAdmin'], function ()
 {
+    Route::get('/admin/consomationRefresh/{id}', 'AdminController@UpdatedConsomation');
     Route::get('/admin', 'AdminController@I_dashboard');
     Route::get('/admin/maisons', 'AdminController@I_maisons');
     Route::get('/admin/maison/{id}', 'AdminController@I_maison');
@@ -56,6 +57,7 @@ Route::group( ['middleware' => 'notAuth'], function ()
 
 
 });
+
 Route::get('/addConsomation', 'ApiController@addConsomation');
 Route::get('/isActivate', 'ApiController@isActivate');
 Route::get('/acc',

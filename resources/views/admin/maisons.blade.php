@@ -57,7 +57,7 @@
                                 <td>{{$maison->Adresse_Maison}}</td>
                                 <td>
                                     <a href="/admin/maison/{{$maison->id_Maison}}" class="iconEye"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="iconEdit"><i class="fas fa-edit"></i></a>
+                                    <a href="#" class="iconEdit" onclick="updateMaison({{$maison->id_Maison}})"><i class="fas fa-edit"></i></a>
                                     <a class="iconTrash" onclick="deleteClient({{$maison->id_Maison}})"><i
                                             class="fas fa-trash"></i></a>
                                 </td>
@@ -151,30 +151,43 @@
                     dataType: "json",
                     success: function (data) {
                         if (data.Success === true) {
-                            alert("success");
-                            $("#listMaison tr:first").before("<tr id=\"Maison" + conteur + "\">" +
-                                "                                <td>" + conteur + "</td>" +
-                                "                                <td>" + client_name + "</td>" +
-                                "                                <td>" + $("#region option:selected").text() + "</td>" +
-                                "                                <td>" + $("#ville option:selected").text() + "</td>" +
-                                "                                <td>" + address + "</td>" +
-                                "                                <td>" +
-                                "                                    <a href=\"/admin/maison/" + conteur + "\" class=\"iconEye\"><i class=\"fas fa-eye\"></i></a>" +
+                            Swal.fire(
+                                'Succès!',
+                                'Maison a été ajouté',
+                                'success'
+                            );
+                            var reg = $("#region option:selected").text();
+                            var vil = $("#ville option:selected").text();
+                            var table = $('#dataTable').DataTable();
+                            table.row.add([
+                                conteur,
+                                client_name,
+                                reg,
+                                vil,
+                                address,
+                                "<a href=\"/admin/maison/" + conteur + "\" class=\"iconEye\"><i class=\"fas fa-eye\"></i></a>" +
                                 "                                    <a href=\"#\" class=\"iconEdit\"><i class=\"fas fa-edit\"></i></a>" +
-                                "                                    <a class=\"iconTrash\" onclick=\"deleteClient(" + conteur + ")\"><i class=\"fas fa-trash\"></i></a>" +
-                                "                                </td>" +
-                                "                            </tr>");
+                                "                                    <a class=\"iconTrash\" onclick=\"deleteClient(" + conteur + ")\"><i class=\"fas fa-trash\"></i></a>",
+                            ]).node().id = 'Maison'+conteur;
+                            table.draw( false );
                             if ($("#clientCheck").is(":checked")){
                                 $("#client option:first").before('<option value="'+data.id+'">'+client_name+'</option>');
                             }
                             $('#addMaisonModal').modal('toggle');
                         } else {
-                            alert("failed");
+                            Swal.fire(
+                                'Attention!',
+                                'une erreur est survenue',
+                                'error'
+                            );
                         }
                     }
                 });
             }
 
+            function updateMaison(id) {
+
+            }
             function deleteClient(id) {
                 Swal.fire({
                     title: 'Etes-vous sur?',

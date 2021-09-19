@@ -56,5 +56,7 @@ class User extends Authenticatable
         return Maison::where('Id_User', $this->id_User)->orderBy('created_at','desc')->get();
         //returns array of Maisons
     }
-
+    static function allUser(){
+        return User::where('Type_User', 1)->count();
+    }
 }

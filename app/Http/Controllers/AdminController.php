@@ -19,8 +19,15 @@ class AdminController extends Controller
         if (Auth::check()) {
             if (Auth::user()->Type_User == 1)
                 return ClientController::I_maison();
-            if (Auth::user()->Type_User == -99)
-                return view("admin.index");
+            if (Auth::user()->Type_User == -99){
+                $totalM = Maison::allMaison();
+                $totalU = User::allUser();
+                return view("admin.index")->with([
+                    'totalM' => $totalM,
+                    'totalU' => $totalU,
+                ]);
+            }
+
         } else
             return view("guest.login");
     }
@@ -43,6 +50,7 @@ class AdminController extends Controller
         $nbConsomations = $maison->isConsomations();
         $consomation = $maison->getAllConsomations();
         $lastConsomation = $maison->getLastConsomations();
+
         return view("admin.singleMaison")->with([
             'maison' => $maison,
             'consomations' => $consomation,
@@ -50,7 +58,14 @@ class AdminController extends Controller
             'nbConsomations' => $nbConsomations,
         ]);
     }
-
+    public function UpdatedConsomation($id){
+        $maison = Maison::find($id);
+        $lastConsomation = $maison->getLastConsomations();
+        return response()->json([
+            'Success' => true,
+            'Consomation' => $lastConsomation,
+        ]);
+    }
     public function I_clients(Request $request)
     {
         $clients = User::getAllClient();

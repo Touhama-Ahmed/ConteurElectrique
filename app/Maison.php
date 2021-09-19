@@ -68,5 +68,12 @@ class Maison extends Model
         return Consomation::where('Id_Maison', $this->id_Maison)->count();
         //returns array of Consomations
     }
+    public function getNewConsomations($id){
+        $dateConsomation = Consomation::find($id);
+        return Consomation::where('created_at', '>' ,$dateConsomation->created_at)->get();
+    }
+    static function allMaison(){
+        return Maison::all()->count();
+    }
 
 }
