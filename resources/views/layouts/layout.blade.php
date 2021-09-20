@@ -23,7 +23,7 @@
     <!-- sweetAlert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css" integrity="sha256-tZS42DPuYTXIRzSSTJS9gwKPv8+pglbBfNtJUNvdyW4=" crossorigin="anonymous">
     <!-- Title -->
-    <title>@yield('title')</title>
+    <title>SMARTILAB</title>
 
     <!-- Css -->
     @yield('css')
