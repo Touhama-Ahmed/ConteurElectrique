@@ -46,8 +46,7 @@ class ApiController extends Controller
 
         return response()->json([
             '1' => $data,
-            '2' => $data.compteur1,
-            '3' => $data->compteur1,
+
         ]);
         // Sending data to our repository
         $success = AdminRepository::createNewConsomation($data);
