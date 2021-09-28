@@ -59,7 +59,7 @@ Route::group( ['middleware' => 'notAuth'], function ()
 });
 
 Route::get('/addConsomation', 'ApiController@addConsomation');
-Route::get('/addConsomations', 'ApiController@addConsomations');
+Route::post('/addConsomations', 'ApiController@addConsomations');
 Route::get('/isActivate', 'ApiController@isActivate');
 Route::get('/acc',
     function (){
