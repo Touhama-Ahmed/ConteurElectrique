@@ -42,9 +42,10 @@ class ApiController extends Controller
     {
 //        http://127.0.0.1:8000/addConsomation?Id_Maison=123&Isactive=1&courrant=14&tension=2&energie=45&Fpuissance=3&frequence=47&puissance=1
 
-        $data = $request->input('data');
+        $data = $request->post('data');
         return response()->json([
-            'result' => $data,
+            '1' => $data->compteur1,
+            '2' => $data->compteur2,
         ]);
         // Sending data to our repository
         $success = AdminRepository::createNewConsomation($data);
