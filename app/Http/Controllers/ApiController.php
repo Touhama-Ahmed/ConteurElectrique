@@ -76,8 +76,8 @@ class ApiController extends Controller
             'Energie_Consomation' => $energie2/1000,
             'Facteurpuissance_Consomation' => $someObject->compteur2[3],
             'Frequence_Consomation' => $someObject->compteur2[4],
-            'PuissanceW_Consomation' => $someObject->compteur2[5],
-            'Isactive_Consomation' => $puissance2/1000,
+            'PuissanceW_Consomation' => $puissance2/1000,
+            'Isactive_Consomation' => $someObject->compteur2[6],
             'Id_Maison' => $someObject->compteur2[7],
         ];
         // Sending data to our repository
