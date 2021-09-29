@@ -48,7 +48,7 @@ class ApiController extends Controller
         //$manage1 = $manage->compteur1;
         $dataMaison = [
             'id_Maison' => 77778,
-            'Adresse_Maison' => (String)$someObject[0]->compteur1,
+            'Adresse_Maison' => (String)$someObject[0]->compteur1[0],
             'Id_Ville' => 115,
             'Id_User' => 11,
         ];
