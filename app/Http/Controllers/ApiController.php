@@ -44,16 +44,16 @@ class ApiController extends Controller
 
         $data = $request->getContent('data');
         $someObject = json_decode($data);
-        $dataMaison = [
-            'id_Maison' => 47,
-            'Adresse_Maison' => $data,
-            'Id_Ville' => 115,
-            'Id_User' => 11,
-        ];
-        $success = AdminRepository::createNewMaison($dataMaison);
-        return response()->json([
-            'Success' => $success,
-        ]);
+//        $dataMaison = [
+//            'id_Maison' => 47,
+//            'Adresse_Maison' => $data,
+//            'Id_Ville' => 115,
+//            'Id_User' => 11,
+//        ];
+//        $success = AdminRepository::createNewMaison($dataMaison);
+//        return response()->json([
+//            'Success' => $success,
+//        ]);
         $data = [
             'Courrant_Consomation' => $someObject->compteur1[0],
             'Tension_Consomation' => $someObject->compteur1[1],
