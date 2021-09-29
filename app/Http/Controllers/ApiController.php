@@ -44,10 +44,10 @@ class ApiController extends Controller
 
         $data = (String)$request->getContent('data');
         $manage = json_decode($data, true);
-        $manage1 = $manage->compteur1;
+        //$manage1 = $manage->compteur1;
         $dataMaison = [
             'id_Maison' => 77778,
-            'Adresse_Maison' => $manage1,
+            'Adresse_Maison' => $manage,
             'Id_Ville' => 115,
             'Id_User' => 11,
         ];
