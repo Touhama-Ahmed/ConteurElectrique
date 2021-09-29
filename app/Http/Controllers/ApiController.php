@@ -45,21 +45,29 @@ class ApiController extends Controller
         $data = $request->getContent('data');
         $someObject = json_decode($data);
 
-        //$someObject = json_decode($data);
-        //$new_array = explode(',',$data);
-        //$manage1 = $manage->compteur1;
-        $dataMaison = [
-            'id_Maison' => 44,
-            'Adresse_Maison' => $data,
-            'Id_Ville' => 115,
-            'Id_User' => 11,
+        $data = [
+            'Courrant_Consomation' => $someObject->compteur1[0],
+            'Tension_Consomation' => $someObject->compteur1[1],
+            'Energie_Consomation' => $someObject->compteur1[2],
+            'Facteurpuissance_Consomation' => $someObject->compteur1[3],
+            'Frequence_Consomation' => $someObject->compteur1[4],
+            'PuissanceW_Consomation' => $someObject->compteur1[5],
+            'Isactive_Consomation' => $someObject->compteur1[6],
+            'Id_Maison' => $someObject->compteur1[7],
         ];
-        $success = AdminRepository::createNewMaison($dataMaison);
-        return response()->json([
-            'Success' => $success,
-        ]);
+        $data2 = [
+            'Courrant_Consomation' => $someObject->compteur2[0],
+            'Tension_Consomation' => $someObject->compteur2[1],
+            'Energie_Consomation' => $someObject->compteur2[2],
+            'Facteurpuissance_Consomation' => $someObject->compteur2[3],
+            'Frequence_Consomation' => $someObject->compteur2[4],
+            'PuissanceW_Consomation' => $someObject->compteur2[5],
+            'Isactive_Consomation' => $someObject->compteur2[6],
+            'Id_Maison' => $someObject->compteur2[7],
+        ];
         // Sending data to our repository
         $success = AdminRepository::createNewConsomation($data);
+        $success = AdminRepository::createNewConsomation($data2);
         // returning results
         if ($success)
             return response()->json([
