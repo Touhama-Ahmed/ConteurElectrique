@@ -54,24 +54,30 @@ class ApiController extends Controller
 //        return response()->json([
 //            'Success' => $success,
 //        ]);
+        $courrant1 = (int)$someObject->compteur1[0];
+        $energie1 = (int)$someObject->compteur1[2];
+        $puissance1 = (int)$someObject->compteur1[5];
         $data = [
-            'Courrant_Consomation' => $someObject->compteur1[0],
+            'Courrant_Consomation' => $courrant1/1000,
             'Tension_Consomation' => $someObject->compteur1[1],
-            'Energie_Consomation' => $someObject->compteur1[2],
+            'Energie_Consomation' => $energie1/1000,
             'Facteurpuissance_Consomation' => $someObject->compteur1[3],
             'Frequence_Consomation' => $someObject->compteur1[4],
-            'PuissanceW_Consomation' => $someObject->compteur1[5],
+            'PuissanceW_Consomation' => $puissance1/1000,
             'Isactive_Consomation' => $someObject->compteur1[6],
             'Id_Maison' => $someObject->compteur1[7],
         ];
+        $courrant2 = (int)$someObject->compteur2[0];
+        $energie2 = (int)$someObject->compteur2[2];
+        $puissance2 = (int)$someObject->compteur2[5];
         $data2 = [
-            'Courrant_Consomation' => $someObject->compteur2[0],
+            'Courrant_Consomation' => $courrant2/1000,
             'Tension_Consomation' => $someObject->compteur2[1],
-            'Energie_Consomation' => $someObject->compteur2[2],
+            'Energie_Consomation' => $energie2/1000,
             'Facteurpuissance_Consomation' => $someObject->compteur2[3],
             'Frequence_Consomation' => $someObject->compteur2[4],
             'PuissanceW_Consomation' => $someObject->compteur2[5],
-            'Isactive_Consomation' => $someObject->compteur2[6],
+            'Isactive_Consomation' => $puissance2/1000,
             'Id_Maison' => $someObject->compteur2[7],
         ];
         // Sending data to our repository
